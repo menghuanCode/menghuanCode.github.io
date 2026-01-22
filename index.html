@@ -83,12 +83,12 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>用 Git 搭建个人博客最流行、最省心的方案是：<br>“本地 Hexo + GitHub Pages（或 Cloudflare Pages）”——完全免费、无需买服务器、还能绑定自定义域名。下面给出 2025 年验证可行的完整流程，按顺序照做即可上线。<br>一、准备工作<br>注册 GitHub 账号。<br>安装 Node.js（≥18）和 Git，终端执行确认版本：<br>node -v<br>git –version<br>二、本地初始化博客<br>全局安装 Hexo 脚手架<br>npm install -g hexo-cli<br>新建并进入博客目录<br>hexo init myblog &amp;&amp; cd myblog<br>npm install<br>本地预览<br>hexo server          # 浏览器访问 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a> 能看到默认页面<br>三、创建远程仓库<br>GitHub 新建公开仓库，命名必须为：<br>&lt;你的GitHub用户名&gt;.github.io<br>记录仓库的 SSH 地址（后续部署用）。<br>四、一键部署配置（最简版）<br>安装 Git 部署插件<br>npm install hexo-deployer-git –save<br>编辑博客根目录 _config.yml，末尾追加：<br>deploy:<br>type: git<br>repo: <a href="mailto:&#x67;&#105;&#x74;&#x40;&#103;&#x69;&#116;&#x68;&#117;&#98;&#x2e;&#x63;&#111;&#109;">git@github.com</a>:&lt;用户名&gt;&#x2F;&lt;用户名&gt;.github.io.git<br>branch: main          # 与仓库默认分支保持一致<br>生成并首次上传<br>hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy<br>看到 “Deploy done” 即成功。<br>浏览器访问 https:&#x2F;&#x2F;&lt;用户名&gt;.github.io 即可看到博客。<br>五、写作与发布<br>新建文章<br>hexo new post “我的第一篇文章”<br>会在 source&#x2F;_posts&#x2F; 生成同名 .md 文件。<br>用 Markdown 写完保存，执行<br>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d<br>代码提交后 30 秒左右线上自动更新。</p>
+        <p>用 Git 搭建个人博客最流行、最省心的方案是：<br>“本地 Hexo + GitHub Pages（或 Cloudflare Pages）”——完全免费、无需买服务器、还能绑定自定义域名。下面给出 2025 年验证可行的完整流程，按顺序照做即可上线。<br>一、准备工作<br>注册 GitHub 账号。<br>安装 Node.js（≥18）和 Git，终端执行确认版本：<br>node -v<br>git –version<br>二、本地初始化博客<br>全局安装 Hexo 脚手架<br>npm install -g hexo-cli<br>新建并进入博客目录<br>hexo init myblog &amp;&amp; cd myblog<br>npm install<br>本地预览<br>hexo server          # 浏览器访问 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a> 能看到默认页面<br>三、创建远程仓库<br>GitHub 新建公开仓库，命名必须为：<br>&lt;你的GitHub用户名&gt;.github.io<br>记录仓库的 SSH 地址（后续部署用）。<br>四、一键部署配置（最简版）<br>安装 Git 部署插件<br>npm install hexo-deployer-git –save<br>编辑博客根目录 _config.yml，末尾追加：<br>deploy:<br>type: git<br>repo: <a href="mailto:&#103;&#x69;&#116;&#x40;&#x67;&#x69;&#116;&#x68;&#x75;&#x62;&#46;&#x63;&#111;&#x6d;">git@github.com</a>:&lt;用户名&gt;&#x2F;&lt;用户名&gt;.github.io.git<br>branch: main          # 与仓库默认分支保持一致<br>生成并首次上传<br>hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy<br>看到 “Deploy done” 即成功。<br>浏览器访问 https:&#x2F;&#x2F;&lt;用户名&gt;.github.io 即可看到博客。<br>五、写作与发布<br>新建文章<br>hexo new post “我的第一篇文章”<br>会在 source&#x2F;_posts&#x2F; 生成同名 .md 文件。<br>用 Markdown 写完保存，执行<br>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d<br>代码提交后 30 秒左右线上自动更新。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/01/23/blog_init/" data-id="cmkpv1oj00001egov3v0s7hoq" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2026/01/23/blog_init/" data-id="cmkpv3h5r0001y0ovea75clh9" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -139,7 +139,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2026/01/23/hello-world/" data-id="cmkpv1oiu0000egov1sw36y79" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2026/01/23/hello-world/" data-id="cmkpv3h5i0000y0ovgvyq35uw" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
