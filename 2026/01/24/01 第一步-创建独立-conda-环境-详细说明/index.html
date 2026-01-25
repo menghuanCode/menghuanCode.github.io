@@ -20,22 +20,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
+    <meta name="description" content="下面把“第一步：创建独立 conda 环境”拆成最细颗粒度的 12 步，每一步都给出命令 + 解释 + 常见报错。照着复制即可一次性成功；哪怕从未装过 Anaconda 也能 10 分钟搞定。 前提检查（1 分钟）Windows：开始菜单搜索 Anaconda Prompt (miniconda3) 如果返回空，先去官网装 miniconda（体积 100 M 以内，比 Anaconda 轻量）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01 第一步 创建独立 conda 环境 详细说明">
+<meta property="og:url" content="http://example.com/2026/01/24/01%20%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%88%9B%E5%BB%BA%E7%8B%AC%E7%AB%8B-conda-%E7%8E%AF%E5%A2%83-%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="下面把“第一步：创建独立 conda 环境”拆成最细颗粒度的 12 步，每一步都给出命令 + 解释 + 常见报错。照着复制即可一次性成功；哪怕从未装过 Anaconda 也能 10 分钟搞定。 前提检查（1 分钟）Windows：开始菜单搜索 Anaconda Prompt (miniconda3) 如果返回空，先去官网装 miniconda（体积 100 M 以内，比 Anaconda 轻量）。">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-01-24T15:56:04.000Z">
+<meta property="article:modified_time" content="2026-01-24T16:16:41.495Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="我学机器学习的日子">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2026/01/24/01%20%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%88%9B%E5%BB%BA%E7%8B%AC%E7%AB%8B-conda-%E7%8E%AF%E5%A2%83-%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2026/01/24/01%20%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%88%9B%E5%BB%BA%E7%8B%AC%E7%AB%8B-conda-%E7%8E%AF%E5%A2%83-%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E/","path":"2026/01/24/01 第一步-创建独立-conda-环境-详细说明/","title":"01 第一步 创建独立 conda 环境 详细说明"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Hexo</title>
+<title>01 第一步 创建独立 conda 环境 详细说明 | Hexo</title>
   
 
 
@@ -82,7 +87,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Hexo</h1>
+      <p class="site-title">Hexo</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -104,7 +109,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -117,6 +122,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E6%8F%90%E6%A3%80%E6%9F%A5%EF%BC%881-%E5%88%86%E9%92%9F%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">前提检查（1 分钟）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9B%B4%E6%96%B0-conda-%E8%87%AA%E8%BA%AB"><span class="nav-number">2.</span> <span class="nav-text">1.更新 conda 自身</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E6%AC%A1%E6%80%A7%E6%8E%A5%E5%8F%97-ToS%EF%BC%8830-%E7%A7%92%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">一次性接受 ToS（30 秒）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%9B%E5%BB%BA%E5%B9%B2%E5%87%80%E7%8E%AF%E5%A2%83%EF%BC%8830-%E7%A7%92%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">2. 创建干净环境（30 秒）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%BF%80%E6%B4%BB%E7%8E%AF%E5%A2%83%EF%BC%88Windows-macOS-Linux-%E9%80%9A%E7%94%A8%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">3. 激活环境（Windows&#x2F;macOS&#x2F;Linux 通用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%85%8D%E7%BD%AE%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%EF%BC%882-%E5%88%86%E9%92%9F%EF%BC%8C%E4%B8%80%E6%AC%A1%E9%85%8D%E7%BD%AE%E6%B0%B8%E4%B9%85%E7%94%9F%E6%95%88%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">4.配置国内镜像（2 分钟，一次配置永久生效）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%85%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E5%8C%85%EF%BC%88CPU-%E7%89%88%EF%BC%8C1-%E5%88%86%E9%92%9F%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">装深度学习核心包（CPU 版，1 分钟）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E8%A3%85%E7%A7%91%E5%AD%A6%E8%AE%A1%E7%AE%97%E4%B8%8E-Jupyter%EF%BC%881-%E5%88%86%E9%92%9F%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">6. 装科学计算与 Jupyter（1 分钟）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E8%A3%85%E5%BC%80%E5%8F%91%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7%EF%BC%8830-%E7%A7%92%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">7. 装开发辅助工具（30 秒）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E6%8A%8A%E7%8E%AF%E5%A2%83%E6%B3%A8%E5%86%8C%E6%88%90-Jupyter-%E5%86%85%E6%A0%B8%EF%BC%8830-%E7%A7%92%EF%BC%89"><span class="nav-number">9.</span> <span class="nav-text">8. 把环境注册成 Jupyter 内核（30 秒）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E7%94%9F%E6%88%90-requirements-txt-%E9%94%81%E7%89%88%E6%9C%AC%EF%BC%8830-%E7%A7%92%EF%BC%89"><span class="nav-number">10.</span> <span class="nav-text">9. 生成 requirements.txt 锁版本（30 秒）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-%E6%B5%8B%E8%AF%95%E4%B8%80%E9%94%AE%E9%87%8D%E8%A3%85%EF%BC%88%E9%AA%8C%E8%AF%81%E5%8F%AF%E5%A4%8D%E7%8E%B0%EF%BC%89"><span class="nav-number">11.</span> <span class="nav-text">10. 测试一键重装（验证可复现）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-%E5%8F%AF%E9%80%89%EF%BC%9A%E6%8A%8A%E7%8E%AF%E5%A2%83%E5%86%99%E8%BF%9B-yml%EF%BC%88%E5%9B%A2%E9%98%9F%E5%85%B1%E4%BA%AB%E6%9B%B4%E6%B8%85%E7%88%BD%EF%BC%89"><span class="nav-number">12.</span> <span class="nav-text">11. 可选：把环境写进 .yml（团队共享更清爽）</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -150,16 +156,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2026/01/24/01%20%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%88%9B%E5%BB%BA%E7%8B%AC%E7%AB%8B-conda-%E7%8E%AF%E5%A2%83-%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -173,13 +180,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="name" content="01 第一步 创建独立 conda 环境 详细说明 | Hexo">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/01/24/01%20%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%88%9B%E5%BB%BA%E7%8B%AC%E7%AB%8B-conda-%E7%8E%AF%E5%A2%83-%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E/" class="post-title-link" itemprop="url">01 第一步 创建独立 conda 环境 详细说明</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          01 第一步 创建独立 conda 环境 详细说明
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -208,8 +215,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-          <p><code>下面把“第一步：创建独立 conda 环境”拆成最细颗粒度的 12 步，每一步都给出命令 + 解释 + 常见报错。照着复制即可一次性成功；哪怕从未装过 Anaconda 也能 10 分钟搞定。</code></p>
+    <div class="post-body" itemprop="articleBody"><p><code>下面把“第一步：创建独立 conda 环境”拆成最细颗粒度的 12 步，每一步都给出命令 + 解释 + 常见报错。照着复制即可一次性成功；哪怕从未装过 Anaconda 也能 10 分钟搞定。</code></p>
 <h3 id="前提检查（1-分钟）"><a href="#前提检查（1-分钟）" class="headerlink" title="前提检查（1 分钟）"></a>前提检查（1 分钟）</h3><p>Windows：开始菜单搜索 Anaconda Prompt (miniconda3)</p>
 <p>如果返回空，先去官网装 miniconda（体积 100 M 以内，比 Anaconda 轻量）。<br>安装完关闭终端再重开，让 ~&#x2F;.bashrc 或 ~&#x2F;.zshrc 里的 PATH 生效。</p>
 <h3 id="1-更新-conda-自身"><a href="#1-更新-conda-自身" class="headerlink" title="1.更新 conda 自身"></a>1.更新 conda 自身</h3><p>因为 Anaconda 在 2024 年末把 repo.anaconda.com 下的默认频道改成了“需先在线接受 ToS（Terms of Service）”模式。</p>
@@ -261,7 +267,6 @@
 <p>pip 包也会记录在 environment.yml 的 pip: 字段，跨平台更稳。</p>
 </blockquote>
 
-      
     </div>
 
     
@@ -269,177 +274,25 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          <div class="post-tags">
+              <a href="/tags/%E6%88%91%E5%AD%A6%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%97%A5%E5%AD%90/" rel="tag"># 我学机器学习的日子</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/01/23/blog_init/" rel="prev" title="用 Git 搭建博客">
+                  <i class="fa fa-angle-left"></i> 用 Git 搭建博客
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
     </footer>
   </article>
 </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2026/01/23/blog_init/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/01/23/blog_init/" class="post-title-link" itemprop="url">用 Git 搭建博客</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2026-01-23 03:43:46" itemprop="dateCreated datePublished" datetime="2026-01-23T03:43:46+08:00">2026-01-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-01-24 23:43:22" itemprop="dateModified" datetime="2026-01-24T23:43:22+08:00">2026-01-24</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="用-Git-搭建个人博客最流行、最省心的方案是："><a href="#用-Git-搭建个人博客最流行、最省心的方案是：" class="headerlink" title="用 Git 搭建个人博客最流行、最省心的方案是："></a>用 Git 搭建个人博客最流行、最省心的方案是：</h2><h3 id="“本地-Hexo-GitHub-Pages（或-Cloudflare-Pages）”——完全免费、无需买服务器、还能绑定自定义域名。下面给出-2025-年验证可行的完整流程，按顺序照做即可上线。"><a href="#“本地-Hexo-GitHub-Pages（或-Cloudflare-Pages）”——完全免费、无需买服务器、还能绑定自定义域名。下面给出-2025-年验证可行的完整流程，按顺序照做即可上线。" class="headerlink" title="“本地 Hexo + GitHub Pages（或 Cloudflare Pages）”——完全免费、无需买服务器、还能绑定自定义域名。下面给出 2025 年验证可行的完整流程，按顺序照做即可上线。"></a>“本地 Hexo + GitHub Pages（或 Cloudflare Pages）”——完全免费、无需买服务器、还能绑定自定义域名。下面给出 2025 年验证可行的完整流程，按顺序照做即可上线。</h3><h3 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h3><h4 id="注册-GitHub-账号-安装-Node-js（≥18）和-Git，终端执行确认版本："><a href="#注册-GitHub-账号-安装-Node-js（≥18）和-Git，终端执行确认版本：" class="headerlink" title="注册 GitHub 账号, 安装 Node.js（≥18）和 Git，终端执行确认版本："></a>注册 GitHub 账号, 安装 Node.js（≥18）和 Git，终端执行确认版本：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">git --version</span><br></pre></td></tr></table></figure>
-<h3 id="二、本地初始化博客"><a href="#二、本地初始化博客" class="headerlink" title="二、本地初始化博客"></a>二、本地初始化博客</h3><h4 id="全局安装-Hexo-脚手架"><a href="#全局安装-Hexo-脚手架" class="headerlink" title="全局安装 Hexo 脚手架"></a>全局安装 Hexo 脚手架</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-<h4 id="新建并进入博客目录"><a href="#新建并进入博客目录" class="headerlink" title="新建并进入博客目录"></a>新建并进入博客目录</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo init myblog &amp;&amp; <span class="built_in">cd</span> myblog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
-<h4 id="本地预览"><a href="#本地预览" class="headerlink" title="本地预览"></a>本地预览</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server          <span class="comment"># 浏览器访问 http://localhost:4000 能看到默认页面</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="三、创建远程仓库"><a href="#三、创建远程仓库" class="headerlink" title="三、创建远程仓库"></a>三、创建远程仓库</h3><h4 id="GitHub-新建公开仓库，命名必须为："><a href="#GitHub-新建公开仓库，命名必须为：" class="headerlink" title="GitHub 新建公开仓库，命名必须为："></a>GitHub 新建公开仓库，命名必须为：</h4><h4 id="github-io"><a href="#github-io" class="headerlink" title="&lt;你的GitHub用户名&gt;.github.io"></a>&lt;你的GitHub用户名&gt;.github.io</h4><h4 id="记录仓库的-SSH-地址（后续部署用）。"><a href="#记录仓库的-SSH-地址（后续部署用）。" class="headerlink" title="记录仓库的 SSH 地址（后续部署用）。"></a>记录仓库的 SSH 地址（后续部署用）。</h4><h3 id="四、一键部署配置（最简版）"><a href="#四、一键部署配置（最简版）" class="headerlink" title="四、一键部署配置（最简版）"></a>四、一键部署配置（最简版）</h3><h4 id="安装-Git-部署插件"><a href="#安装-Git-部署插件" class="headerlink" title="安装 Git 部署插件"></a>安装 Git 部署插件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-<h4 id="编辑博客根目录-config-yml，末尾追加："><a href="#编辑博客根目录-config-yml，末尾追加：" class="headerlink" title="编辑博客根目录 _config.yml，末尾追加："></a>编辑博客根目录 _config.yml，末尾追加：</h4><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">repo:</span> <span class="string">git@github.com:&lt;用户名&gt;/&lt;用户名&gt;.github.io.git</span></span><br><span class="line"><span class="attr">branch:</span> <span class="string">main</span>          <span class="comment"># 与仓库默认分支保持一致</span></span><br></pre></td></tr></table></figure>
-<h4 id="生成并首次上传"><a href="#生成并首次上传" class="headerlink" title="生成并首次上传"></a>生成并首次上传</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
-<h4 id="看到-“Deploy-done”-即成功。"><a href="#看到-“Deploy-done”-即成功。" class="headerlink" title="看到 “Deploy done” 即成功。"></a>看到 “Deploy done” 即成功。</h4><h4 id="浏览器访问-https-github-io-即可看到博客。"><a href="#浏览器访问-https-github-io-即可看到博客。" class="headerlink" title="浏览器访问 https:&#x2F;&#x2F;&lt;用户名&gt;.github.io 即可看到博客。"></a>浏览器访问 https:&#x2F;&#x2F;&lt;用户名&gt;.github.io 即可看到博客。</h4><h3 id="五、写作与发布"><a href="#五、写作与发布" class="headerlink" title="五、写作与发布"></a>五、写作与发布</h3><h4 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post <span class="string">&quot;我的第一篇文章&quot;</span></span><br></pre></td></tr></table></figure>
-<h4 id="会在-source-posts-生成同名-md-文件。"><a href="#会在-source-posts-生成同名-md-文件。" class="headerlink" title="会在 source&#x2F;_posts&#x2F; 生成同名 .md 文件。"></a>会在 source&#x2F;_posts&#x2F; 生成同名 .md 文件。</h4><h4 id="用-Markdown-写完保存，执行"><a href="#用-Markdown-写完保存，执行" class="headerlink" title="用 Markdown 写完保存，执行"></a>用 Markdown 写完保存，执行</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
-<h4 id="代码提交后-30-秒左右线上自动更新。"><a href="#代码提交后-30-秒左右线上自动更新。" class="headerlink" title="代码提交后 30 秒左右线上自动更新。"></a>代码提交后 30 秒左右线上自动更新。</h4>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2026/01/23/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Hexo">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/01/23/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2026-01-23 03:35:41" itemprop="dateCreated datePublished" datetime="2026-01-23T03:35:41+08:00">2026-01-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
 
 
 
