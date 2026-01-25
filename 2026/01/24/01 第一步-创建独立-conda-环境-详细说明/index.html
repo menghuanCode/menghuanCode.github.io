@@ -28,7 +28,7 @@
 <meta property="og:description" content="下面把“第一步：创建独立 conda 环境”拆成最细颗粒度的 12 步，每一步都给出命令 + 解释 + 常见报错。照着复制即可一次性成功；哪怕从未装过 Anaconda 也能 10 分钟搞定。 前提检查（1 分钟）Windows：开始菜单搜索 Anaconda Prompt (miniconda3) 如果返回空，先去官网装 miniconda（体积 100 M 以内，比 Anaconda 轻量）。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-01-24T15:56:04.000Z">
-<meta property="article:modified_time" content="2026-01-24T16:16:41.495Z">
+<meta property="article:modified_time" content="2026-01-25T16:19:29.375Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="我学机器学习的日子">
 <meta name="twitter:card" content="summary">
@@ -135,7 +135,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -203,7 +203,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-01-25 00:16:41" itemprop="dateModified" datetime="2026-01-25T00:16:41+08:00">2026-01-25</time>
+      <time title="Modified: 2026-01-26 00:19:29" itemprop="dateModified" datetime="2026-01-26T00:19:29+08:00">2026-01-26</time>
     </span>
 
   
@@ -239,10 +239,9 @@
 <blockquote>
 <p>公司内网可用 –trusted-host 或自建 Artifactory；教育网用户可把 tuna 换成 ustc。</p>
 </blockquote>
-<h3 id="装深度学习核心包（CPU-版，1-分钟）"><a href="#装深度学习核心包（CPU-版，1-分钟）" class="headerlink" title="装深度学习核心包（CPU 版，1 分钟）"></a>装深度学习核心包（CPU 版，1 分钟）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install torch torchvision torchaudio --index-url </span><br><span class="line">https://download.pytorch.org/whl/cpu</span><br></pre></td></tr></table></figure>
+<h3 id="装深度学习核心包（CPU-版，1-分钟）"><a href="#装深度学习核心包（CPU-版，1-分钟）" class="headerlink" title="装深度学习核心包（CPU 版，1 分钟）"></a>装深度学习核心包（CPU 版，1 分钟）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install torch torchvision torchaudio</span><br></pre></td></tr></table></figure>
 <ul>
-<li>注意：URL 带 cpu 标签，体积 200 M；不要直接 conda install pytorch 可能拉 CUDA 11.8 导致 2 G。</li>
-<li>后续有 GPU 再 pip install –upgrade torch torchvision torchaudio –index-url <a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/cu121">https://download.pytorch.org/whl/cu121</a> 即可原地升级，无需重建环境。</li>
+<li>后续有更新 再 pip install –upgrade torch torchvision torchaudio</li>
 </ul>
 <h3 id="6-装科学计算与-Jupyter（1-分钟）"><a href="#6-装科学计算与-Jupyter（1-分钟）" class="headerlink" title="6. 装科学计算与 Jupyter（1 分钟）"></a>6. 装科学计算与 Jupyter（1 分钟）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install numpy pandas scikit-learn matplotlib seaborn jupyter jupyterlab</span><br></pre></td></tr></table></figure>
 <ul>
@@ -255,14 +254,16 @@
 <blockquote>
 <p>以后无论系统默认 Python 是什么，Jupyter 里都能选 Python (ml) 内核，保证包隔离。</p>
 </blockquote>
-<h3 id="9-生成-requirements-txt-锁版本（30-秒）"><a href="#9-生成-requirements-txt-锁版本（30-秒）" class="headerlink" title="9. 生成 requirements.txt 锁版本（30 秒）"></a>9. 生成 <code>requirements.txt</code> 锁版本（30 秒）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
-<p>第一行应是 torch&#x3D;&#x3D;2.x.x+cpu 之类，不要手动删 +cpu，否则下次装错版本。</p>
+<h3 id="9-生成-requirements-txt-锁版本（30-秒）"><a href="#9-生成-requirements-txt-锁版本（30-秒）" class="headerlink" title="9. 生成 requirements.txt 锁版本（30 秒）"></a>9. 生成 <code>requirements.txt</code> 锁版本（30 秒）</h3><p>Windows（PowerShell &#x2F; Anaconda Prompt）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>手动删除全部 +cpu，否则下次装错版本。<br>一行命令就能替换掉，<strong>在 (ml) 环境里执行：</strong></p>
 <h3 id="10-测试一键重装（验证可复现）"><a href="#10-测试一键重装（验证可复现）" class="headerlink" title="10. 测试一键重装（验证可复现）"></a>10. 测试一键重装（验证可复现）</h3><p>另开一个终端：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">conda <span class="built_in">env</span> remove -n ml       <span class="comment"># 删掉刚建的环境</span></span><br><span class="line">conda create -n ml python=3.11 -y</span><br><span class="line">conda activate ml</span><br><span class="line">pip install -r requirements.txt</span><br><span class="line">python -c <span class="string">&quot;import torch, sklearn, pandas, jupyterlab; print(&#x27;OK&#x27;)&quot;</span></span><br></pre></td></tr></table></figure>
 <p>能打印 OK 说明锁文件有效，团队其他成员 git clone 后 2 分钟即可复现。</p>
-<h3 id="11-可选：把环境写进-yml（团队共享更清爽）"><a href="#11-可选：把环境写进-yml（团队共享更清爽）" class="headerlink" title="11. 可选：把环境写进 .yml（团队共享更清爽）"></a>11. 可选：把环境写进 .yml（团队共享更清爽）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda <span class="built_in">env</span> <span class="built_in">export</span> --no-builds | grep -v <span class="string">&quot;^prefix:&quot;</span> &gt; environment.yml</span><br></pre></td></tr></table></figure>
+<h3 id="11-可选：把环境写进-yml（团队共享更清爽）"><a href="#11-可选：把环境写进-yml（团队共享更清爽）" class="headerlink" title="11. 可选：把环境写进 .yml（团队共享更清爽）"></a>11. 可选：把环境写进 .yml（团队共享更清爽）</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda env export <span class="literal">--no-builds</span> | <span class="built_in">Select-String</span> <span class="literal">-Pattern</span> <span class="string">&#x27;^prefix:&#x27;</span> <span class="operator">-NotMatch</span> | <span class="built_in">Set-Content</span> environment.yml</span><br></pre></td></tr></table></figure>
 <p>别人只需：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda <span class="built_in">env</span> create -f environment.yml</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 执行 environment.yml 前需要把 environment.yml 里的 name: base 重命名</span></span><br><span class="line"><span class="comment"># base 是 conda 的保留环境名，不允许覆盖。可以改成ml2或者其他</span></span><br><span class="line"><span class="comment"># 还有把+cpu给去掉</span></span><br><span class="line">conda <span class="built_in">env</span> create -f environment.yml</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>pip 包也会记录在 environment.yml 的 pip: 字段，跨平台更稳。</p>
 </blockquote>
@@ -287,6 +288,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2026/01/26/02-%E6%9C%BA%E5%99%A8%E5%AD%A6%E5%AD%A6%E4%B9%A0%E5%A4%A7%E7%BA%B2/" rel="next" title="02-机器学学习大纲">
+                  02-机器学学习大纲 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
