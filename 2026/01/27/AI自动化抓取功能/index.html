@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="如果你想“自己用 AI”来实现整套「自动打开网站 → 登录各销售后台 → 下载业务数据」，本质上就是把传统爬虫&#x2F;RPA 流程里的“人工写规则”环节，尽量换成大模型来“看网页→决策→写代码&#x2F;点按钮”。为此，你需要在系统里内嵌 6 个 AI 能力模块，对应 6 个功能点：  1. 视觉解析（Vision Parsing）功能：把网页截图 + DOM 结构喂给多模态模型，让它“看懂">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI自动化抓取功能">
+<meta property="og:url" content="http://example.com/2026/01/27/AI%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8A%93%E5%8F%96%E5%8A%9F%E8%83%BD/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="如果你想“自己用 AI”来实现整套「自动打开网站 → 登录各销售后台 → 下载业务数据」，本质上就是把传统爬虫&#x2F;RPA 流程里的“人工写规则”环节，尽量换成大模型来“看网页→决策→写代码&#x2F;点按钮”。为此，你需要在系统里内嵌 6 个 AI 能力模块，对应 6 个功能点：  1. 视觉解析（Vision Parsing）功能：把网页截图 + DOM 结构喂给多模态模型，让它“看懂">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-01-27T15:24:55.000Z">
+<meta property="article:modified_time" content="2026-01-27T15:51:56.252Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2026/01/27/AI%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8A%93%E5%8F%96%E5%8A%9F%E8%83%BD/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2026/01/27/AI%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8A%93%E5%8F%96%E5%8A%9F%E8%83%BD/","path":"2026/01/27/AI自动化抓取功能/","title":"AI自动化抓取功能"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>AI自动化抓取功能 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%A7%86%E8%A7%89%E8%A7%A3%E6%9E%90%EF%BC%88Vision-Parsing%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">1. 视觉解析（Vision Parsing）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AF%BC%E8%88%AA%E8%A7%84%E5%88%92%EF%BC%88Navigation-Planning%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">2. 导航规划（Navigation Planning）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%8A%A8%E4%BD%9C%E6%89%A7%E8%A1%8C%EF%BC%88Action-Execution%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">3. 动作执行（Action Execution）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%BC%82%E5%B8%B8%E6%81%A2%E5%A4%8D%EF%BC%88Self-healing%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">4. 异常恢复（Self-healing）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97-%E5%AF%B9%E9%BD%90%EF%BC%88Data-Post-processing%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">5. 数据清洗&#x2F;对齐（Data Post-processing）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E8%AE%B0%E5%BF%86%E4%B8%8E%E5%8F%8D%E9%A6%88%EF%BC%88Memory-Feedback%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">6. 记忆与反馈（Memory &amp; Feedback）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%89%88%E6%9C%AC"><span class="nav-number">7.</span> <span class="nav-text">一句话版本</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A8%E8%87%AA%E7%A0%94%E7%9A%84%E8%AF%9D"><span class="nav-number"></span> <span class="nav-text">全自研的话</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#16-%E4%B8%AA%E5%BF%85%E9%A1%BB%E8%87%AA%E7%A0%94%E7%9A%84%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97"><span class="nav-number"></span> <span class="nav-text">16 个必须自研的功能模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B5%8F%E8%A7%88%E5%99%A8%E9%A9%B1%E5%8A%A8%EF%BC%88%E8%A3%B8-CDP%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">1.浏览器驱动（裸 CDP）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%A1%B5%E9%9D%A2%E5%BF%AB%E7%85%A7%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">2.页面快照序列化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%A7%86%E8%A7%89%E7%BC%96%E7%A0%81%E5%99%A8%EF%BC%88Vision-Encoder%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">3.视觉编码器（Vision Encoder）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8A%A8%E4%BD%9C%E8%AF%8D%E6%B1%87%E8%A1%A8-%E5%8A%A8%E4%BD%9C%E7%A9%BA%E9%97%B4"><span class="nav-number">4.</span> <span class="nav-text">4.动作词汇表 &amp; 动作空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%B0%8F%E5%8F%82%E6%95%B0%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%881-1B%E2%80%937B%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">5. 小参数语言模型（1.1B–7B）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%EF%BC%88self-hosted%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">6. 推理服务（self-hosted）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%90%91%E9%87%8F%E7%B4%A2%E5%BC%95%EF%BC%88%E8%87%AA%E5%BB%BA-ANN%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">7. 向量索引（自建 ANN）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E8%BD%A8%E8%BF%B9%E5%9B%9E%E6%94%BE%E6%B1%A0%EF%BC%88Trajectory-Pool%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">8. 轨迹回放池（Trajectory Pool）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E7%BB%8F%E9%AA%8C%E5%8F%AC%E5%9B%9E%EF%BC%88RAG%EF%BC%89"><span class="nav-number">9.</span> <span class="nav-text">9. 经验召回（RAG）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E4%B8%8E%E8%87%AA%E6%81%A2%E5%A4%8D"><span class="nav-number">10.</span> <span class="nav-text">10. 异常检测与自恢复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97%E8%84%9A%E6%9C%AC%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">11.</span> <span class="nav-text">11. 数据清洗脚本生成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-%E7%89%88%E6%9C%AC%E5%8C%96%E8%90%BD%E7%9B%98%EF%BC%88Git-LFS-Parquet%EF%BC%89"><span class="nav-number">12.</span> <span class="nav-text">12. 版本化落盘（Git LFS + Parquet）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-%E8%B0%83%E5%BA%A6%E4%B8%8E%E5%B9%B6%E5%8F%91%E5%BC%95%E6%93%8E"><span class="nav-number">13.</span> <span class="nav-text">13. 调度与并发引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-%E7%9B%91%E6%8E%A7-%E5%8F%AF%E8%A7%82%E6%B5%8B"><span class="nav-number">14.</span> <span class="nav-text">14. 监控 &amp; 可观测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83"><span class="nav-number">15.</span> <span class="nav-text">15. 配置中心</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC"><span class="nav-number">16.</span> <span class="nav-text">16. 一键部署脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BB%BD%E7%A6%BB%E7%BA%BF%E8%87%AA%E5%BB%BA%E8%B5%84%E4%BA%A7"><span class="nav-number"></span> <span class="nav-text">3 份离线自建资产</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E8%AE%AD%E7%BB%83%E8%AF%AD%E6%96%99%EF%BC%88100-%E4%B8%87%E9%A1%B5%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">预训练语料（100 万页）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E6%B4%97%E8%A7%84%E5%88%99%E7%9F%A5%E8%AF%86%E5%BA%93%EF%BC%885-%E4%B8%87%E6%9D%A1%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">清洗规则知识库（5 万条）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%8D%E8%A1%A8-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">词表&#x2F;符号表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%BC%80%E5%8F%91%E9%A1%BA%E5%BA%8F%EF%BC%886-%E5%91%A8%E6%8E%92%E6%9C%9F%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">四、开发顺序（6 周排期）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%9C%80%E5%B0%8F%E5%8F%AF%E8%BF%90%E8%A1%8C-Git-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number"></span> <span class="nav-text">五、最小可运行 Git 目录结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E5%BC%80%E6%BA%90%E7%9A%84%E7%94%A8%E5%BC%80%E6%BA%90%E7%9A%84"><span class="nav-number"></span> <span class="nav-text">有开源的用开源的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E9%A9%B1%E5%8A%A8%EF%BC%88%E8%A3%B8-CDP-%E4%B8%8D%E4%BE%9D%E8%B5%96%E5%95%86%E4%B8%9A%E5%8C%85%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">一、浏览器驱动（裸 CDP 不依赖商业包）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%A7%86%E8%A7%89-%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%88%E5%BC%80%E6%BA%90-%E4%B8%AD%E6%96%87%E5%8F%8B%E5%A5%BD%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">二、视觉-语言模型（开源 &amp; 中文友好）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%90%91%E9%87%8F%E8%AE%B0%E5%BF%86%EF%BC%88RAG-%E5%8F%AC%E5%9B%9E%E8%BD%A8%E8%BF%B9%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">三、向量记忆（RAG 召回轨迹）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%8A%A8%E4%BD%9C%E7%94%9F%E6%88%90-Agent-%E6%A1%86%E6%9E%B6"><span class="nav-number">4.</span> <span class="nav-text">四、动作生成 &amp; Agent 框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97-%E8%90%BD%E7%9B%98"><span class="nav-number">5.</span> <span class="nav-text">五、数据清洗 &amp; 落盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%B0%83%E5%BA%A6-%E7%9B%91%E6%8E%A7%EF%BC%88%E5%85%A8%E5%BC%80%E6%BA%90%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">六、调度 &amp; 监控（全开源）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%EF%BC%88%E7%9B%B4%E6%8E%A5%E7%85%A7%E6%8A%84%E5%8D%B3%E5%8F%AF%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">总结（直接照抄即可）</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/01/27/AI%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8A%93%E5%8F%96%E5%8A%9F%E8%83%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="AI自动化抓取功能 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AI自动化抓取功能
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2026-01-27 23:24:55 / Modified: 23:51:56" itemprop="dateCreated datePublished" datetime="2026-01-27T23:24:55+08:00">2026-01-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>如果你想“自己用 AI”来实现整套「自动打开网站 → 登录各销售后台 → 下载业务数据」，本质上就是把传统爬虫&#x2F;RPA 流程里的“人工写规则”环节，尽量换成大模型来“看网页→决策→写代码&#x2F;点按钮”。<br>为此，你需要在系统里内嵌 6 个 AI 能力模块，对应 6 个功能点：</p>
+</blockquote>
+<h3 id="1-视觉解析（Vision-Parsing）"><a href="#1-视觉解析（Vision-Parsing）" class="headerlink" title="1. 视觉解析（Vision Parsing）"></a>1. 视觉解析（Vision Parsing）</h3><p>功能：把网页截图 + DOM 结构喂给多模态模型，让它“看懂”当前页面有哪些表格、按钮、日期控件、导出入口。</p>
+<p>技术：GPT-4o &#x2F; Gemini-1.5-Pro &#x2F; Claude-3.5-SONNET 的 vision API，输出 JSON 描述元素坐标、类型、语义。</p>
+<h3 id="2-导航规划（Navigation-Planning）"><a href="#2-导航规划（Navigation-Planning）" class="headerlink" title="2. 导航规划（Navigation Planning）"></a>2. 导航规划（Navigation Planning）</h3><p>功能：根据“业务目标（下载 2025-12 销售报表）”和当前页面快照，自动输出下一步操作序列，比如「1. 点击【报表中心】 2. 选择【销售明细】 3. 输入日期 2025-12-01~2025-12-31 4. 点击【导出 Excel】」。</p>
+<p>技术：ReAct &#x2F; Reflexion &#x2F; Chain-of-Thought Prompt，让模型在“思考-行动-观察”循环里自己纠正路径。</p>
+<h3 id="3-动作执行（Action-Execution）"><a href="#3-动作执行（Action-Execution）" class="headerlink" title="3. 动作执行（Action Execution）"></a>3. 动作执行（Action Execution）</h3><p>功能：把自然语言操作翻译成浏览器可执行命令（点击、输入、滚动、等待下载）。</p>
+<p>技术：</p>
+<p>– 轻量：Playwright&#x2F;Selenium 的 CDP 接口；</p>
+<p>– 高级：开源项目 seeact、WebArena、MetaGPT-UI，把模型输出的 JSON 直接映射成 page.click(x, y) 或 DOM selector。</p>
+<h3 id="4-异常恢复（Self-healing）"><a href="#4-异常恢复（Self-healing）" class="headerlink" title="4. 异常恢复（Self-healing）"></a>4. 异常恢复（Self-healing）</h3><p>功能：遇到验证码、弹窗、页面改版、按钮位移时，模型能自动重试并改写 selector 或截图找新坐标。</p>
+<p>技术：在 ReAct 循环里加入「异常截图 → 重新定位 → 更新操作」分支；也可以外挂一个轻量检测模型（YOLOv8）专门识别验证码类型，再调用第三方打码平台。</p>
+<h3 id="5-数据清洗-对齐（Data-Post-processing）"><a href="#5-数据清洗-对齐（Data-Post-processing）" class="headerlink" title="5. 数据清洗&#x2F;对齐（Data Post-processing）"></a>5. 数据清洗&#x2F;对齐（Data Post-processing）</h3><p>功能：下载下来的文件可能是多语言、多币种、多表头，需要统一列名、汇率、日期格式。</p>
+<p>技术：</p>
+<p>– 让 LLM 直接读 Excel&#x2F;CSV，输出“重命名映射表”+“清洗代码”（Pandas 脚本）；</p>
+<p>– 或者走 ETL 规则引擎，LLM 只负责“生成规则配置文件”。</p>
+<h3 id="6-记忆与反馈（Memory-Feedback）"><a href="#6-记忆与反馈（Memory-Feedback）" class="headerlink" title="6. 记忆与反馈（Memory &amp; Feedback）"></a>6. 记忆与反馈（Memory &amp; Feedback）</h3><p>功能：同一家网站第二次跑时，模型应记住“上次成功的 DOM 路径、日期格式、等待时长”，不再从零推理。</p>
+<p>技术：向量数据库存储“站点 ID + 页面哈希 + 成功操作序列”，下次先检索最相似经验；失败时写入“负样本”供后续微调。</p>
+<h3 id="一句话版本"><a href="#一句话版本" class="headerlink" title="一句话版本"></a>一句话版本</h3><p>“浏览器驱动 + 大模型（视觉+推理）+ 向量记忆 + 轻量 ETL” 四件套即可落地。<br>展开成最小可跑、又能随时横向扩展的技术栈，如下表：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>首选技术</th>
+<th>作用</th>
+<th>备注&#x2F;可替换</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>① 浏览器自动化</td>
+<td>Playwright (Python&#x2F;JS)</td>
+<td>真正“打开网页-点击-下载”</td>
+<td>Selenium&#x2F;DrissionPage 也能用，但 Playwright 对等待、下载、headless 支持最好</td>
+</tr>
+<tr>
+<td>② 视觉+语言模型</td>
+<td>GPT-4o &#x2F; Gemini-1.5-Pro &#x2F; Claude-3.5-SONNET</td>
+<td>看懂页面→规划下一步→生成代码</td>
+<td>预算紧可用 Qwen-VL-Chat、CogVLM 本地 8-bit 推理</td>
+</tr>
+<tr>
+<td>③ 提示框架</td>
+<td>LangChain &#x2F; LlamaIndex &#x2F; 原生 ReAct</td>
+<td>把“截图→思考→动作→记忆”循环标准化</td>
+<td>百行代码也能自己写，LangChain 省脚手架</td>
+</tr>
+<tr>
+<td>④ 向量记忆</td>
+<td>Chroma&#x2F;Qdrant（本地）或 Pinecone（云）</td>
+<td>存成功轨迹、异常经验，下次 RAG 复用</td>
+<td>数据量小直接用 SQLite + sentence-transformers</td>
+</tr>
+<tr>
+<td>⑤ 任务&#x2F;异常调度</td>
+<td>asyncio + tenacity（重试）+ APScheduler（定时）</td>
+<td>并发、断点续跑、失败回退</td>
+<td>heavier 场景换 Celery + Redis</td>
+</tr>
+<tr>
+<td>⑥ 数据清洗</td>
+<td>Pandas + 让 LLM 生成 python 片段</td>
+<td>列名翻译、币种换算、日期统一</td>
+<td>量大可转 DuckDB、Polars</td>
+</tr>
+<tr>
+<td>⑦ 配置&#x2F;密钥</td>
+<td>pydantic-settings + python-dotenv</td>
+<td>管理账号、API-key、代理</td>
+<td>容器化时直接挂 K8s Secret</td>
+</tr>
+<tr>
+<td>⑧ 部署与监控</td>
+<td>Docker + FastAPI（暴露手动触发接口）+ Prometheus</td>
+<td>一键镜像、日志、 metrics</td>
+<td>单机可先 docker-compose；后面丢 Serverless（阿里云 FC、AWS Lambda）</td>
+</tr>
+</tbody></table>
+<h1 id="全自研的话"><a href="#全自研的话" class="headerlink" title="全自研的话"></a>全自研的话</h1><p>如果“一行现成的 SaaS &#x2F; 开源框架都不想用，全部自己从头撸”，那你需要自研的其实只有 * 5 大子系统、16 个功能模块，外加 3 份离线资产。下面给出“从零到生产”的完整自研清单、关键技术点与最小数据结构，方便你直接开 Repo。</p>
+<h2 id="16-个必须自研的功能模块"><a href="#16-个必须自研的功能模块" class="headerlink" title="16 个必须自研的功能模块"></a>16 个必须自研的功能模块</h2><h3 id="1-浏览器驱动（裸-CDP）"><a href="#1-浏览器驱动（裸-CDP）" class="headerlink" title="1.浏览器驱动（裸 CDP）"></a>1.浏览器驱动（裸 CDP）</h3><p>用 Chrome 官方库 github.com&#x2F;chromium&#x2F;chromium —— 远程调试端口 9222<br>自己封装 6 个原子命令：Page.navigate &#x2F; Runtime.evaluate &#x2F; DOM.querySelector &#x2F; Input.dispatchMouseEvent &#x2F; Input.dispatchKeyEvent &#x2F; Page.captureScreenshot<br>下载监听：Browser.setDownloadBehavior 把文件重定向到已知目录，配合 Page.downloadWillBegin 事件拿到文件名。</p>
+<h3 id="2-页面快照序列化"><a href="#2-页面快照序列化" class="headerlink" title="2.页面快照序列化"></a>2.页面快照序列化</h3><ul>
+<li>截图：PNG → 统一 1280×720，压缩质量 85</li>
+<li>DOM 精简：只保留可见节点，属性仅 tagName、class、id、href、type、value、bounds（通过 DOM.getBoxModel），体积 &lt;150 KB&#x2F;页</li>
+<li>生成「截图 + DOM-JSON」二元组，作为后续模型的统一输入。</li>
+</ul>
+<h3 id="3-视觉编码器（Vision-Encoder）"><a href="#3-视觉编码器（Vision-Encoder）" class="headerlink" title="3.视觉编码器（Vision Encoder）"></a>3.视觉编码器（Vision Encoder）</h3><ul>
+<li>方案 A：CLIP-ViT-B&#x2F;16 直接出 512 维向量，轻量、可本地跑</li>
+<li>方案 B：自训 ScreenBERT：用 1M 中文网页截图 + 对应 DOM 做 MLM 预训练，得到 768 维向量<br>输出固定维度的「页面视觉特征」v。</li>
+</ul>
+<h3 id="4-动作词汇表-动作空间"><a href="#4-动作词汇表-动作空间" class="headerlink" title="4.动作词汇表 &amp; 动作空间"></a>4.动作词汇表 &amp; 动作空间</h3><p>限定 7 种原子动作，降低模型输出空间：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; &quot;action_id&quot;: 0-6,</span><br><span class="line">  &quot;txt&quot;: &quot;click|type|scroll|wait|go_back|go_forward|download&quot; ,</span><br><span class="line">  &quot;arg&quot;: &quot;selector|text|pixels|seconds|NULL&quot; &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-小参数语言模型（1-1B–7B）"><a href="#5-小参数语言模型（1-1B–7B）" class="headerlink" title="5. 小参数语言模型（1.1B–7B）"></a>5. 小参数语言模型（1.1B–7B）</h3><ul>
+<li>基座：Qwen2-7B-Instruct 或 Llama3-8B-Chinese</li>
+<li>继续预训练：100 万条「网页截图(路径) + DOM + 人类操作序列」自我对抗生成（用现有 GPT-4o 批量标注，再人工抽检 5%）</li>
+<li>微调目标：输入「截图路径 + DOM-JSON + 目标描述」→ 输出「下一步动作 JSON」+「是否结束」标志位</li>
+<li>训练框架：LLaMA-Factory &#x2F; Axolotl，2×A100-40G 3 天可收敛。</li>
+</ul>
+<h3 id="6-推理服务（self-hosted）"><a href="#6-推理服务（self-hosted）" class="headerlink" title="6. 推理服务（self-hosted）"></a>6. 推理服务（self-hosted）</h3><ul>
+<li>vLLM + FastAPI，int4 量化，batch&#x3D;8，首 token &lt;600 ms</li>
+<li>显存占用 6 GB（7B 模型 int4）→ 单卡 24 GB 可跑 3 并发。</li>
+</ul>
+<h3 id="7-向量索引（自建-ANN）"><a href="#7-向量索引（自建-ANN）" class="headerlink" title="7. 向量索引（自建 ANN）"></a>7. 向量索引（自建 ANN）</h3><ul>
+<li>选 hnswlib 或 faiss IndexHNSW，维度 768&#x2F;512，M&#x3D;32，efConstruction&#x3D;200</li>
+<li>内存约 4 字节×维×向量数，100 万条 768 维 ≈ 3 GB RAM</li>
+<li>写入：页面视觉特征 v + DOM-文本特征（MiniLM 句向量）做加权拼接，再 L2 归一化。</li>
+</ul>
+<h3 id="8-轨迹回放池（Trajectory-Pool）"><a href="#8-轨迹回放池（Trajectory-Pool）" class="headerlink" title="8. 轨迹回放池（Trajectory Pool）"></a>8. 轨迹回放池（Trajectory Pool）</h3><ul>
+<li>表结构：<br>traj_id | url_hash | goal | success_flag | action_sequence(json) | screenshot_dir | cleaned_csv_path | ctime</li>
+<li>本地用 PostgreSQL + JSONB，索引 (url_hash, success_flag)；亿级可迁 ClickHouse。</li>
+</ul>
+<h3 id="9-经验召回（RAG）"><a href="#9-经验召回（RAG）" class="headerlink" title="9. 经验召回（RAG）"></a>9. 经验召回（RAG）</h3><ul>
+<li>当前页面 v → ANN 取 Top-5 相似轨迹 → 过滤 success_flag&#x3D;true → 把「动作序列」拼成 prompt 示例，喂给语言模型做 in-context learning，减少幻觉。</li>
+</ul>
+<h3 id="10-异常检测与自恢复"><a href="#10-异常检测与自恢复" class="headerlink" title="10. 异常检测与自恢复"></a>10. 异常检测与自恢复</h3><ul>
+<li>规则层：<br>– 页面 15 s 仍无响应 → 刷新<br>– selector 找不到 → DOM diff：把当前 DOM 与上次成功 DOM 做最长公共子序列，定位新增&#x2F;消失节点，自动生成备选 selector（id→class→xpath→text）</li>
+<li>模型层：遇到验证码&#x2F;弹窗，把局部截图再喂给视觉模型做“分类：滑块&#x2F;点选&#x2F;短信”，调用第三方打码平台或内置滑动轨迹生成器。</li>
+</ul>
+<h3 id="11-数据清洗脚本生成器"><a href="#11-数据清洗脚本生成器" class="headerlink" title="11. 数据清洗脚本生成器"></a>11. 数据清洗脚本生成器</h3><ul>
+<li>把下载的 CSV&#x2F;Excel 第一页 + 列名喂给微调后的 1.1B「代码小模型」，输出一段 Python（仅依赖 pandas、numpy）</li>
+<li>沙箱执行：PyPy sandbox + RestrictedPython，禁止 import os&#x2F;socket 等，超时 30 s</li>
+<li>输出标准化 Parquet，schema 统一：date, sku, qty, amount, currency, channel。</li>
+</ul>
+<h3 id="12-版本化落盘（Git-LFS-Parquet）"><a href="#12-版本化落盘（Git-LFS-Parquet）" class="headerlink" title="12. 版本化落盘（Git LFS + Parquet）"></a>12. 版本化落盘（Git LFS + Parquet）</h3><ul>
+<li>每次任务生成 sales_YYYYMMDD_HHMMSS_{site}.parquet，同批次写 _SUCCESS 空文件</li>
+<li>大文件走 Git LFS；元数据（大小、行数、hash）写 manifest.json 一并 commit，保证可回滚。</li>
+</ul>
+<h3 id="13-调度与并发引擎"><a href="#13-调度与并发引擎" class="headerlink" title="13. 调度与并发引擎"></a>13. 调度与并发引擎</h3><ul>
+<li>纯 asyncio + 进程池：浏览器每进程 1 个 CDP 实例，避免锁</li>
+<li>任务队列：用 Redis List 实现，LPUSH 下发，BRPOP 抢任务</li>
+<li>优先级：goal 级别 0-9，数字越小越先出队。</li>
+</ul>
+<h3 id="14-监控-可观测"><a href="#14-监控-可观测" class="headerlink" title="14. 监控 &amp; 可观测"></a>14. 监控 &amp; 可观测</h3><ul>
+<li>日志：JSON 格式打到 stdout，Filebeat 收集 → Elasticsearch</li>
+<li>指标：prometheus_client 暴露 browser_restart_total、download_bytes、success_rate、avg_step_latency</li>
+<li>告警：Prometheus + AlertManager，成功率 &lt;90% 或单任务 &gt;10 min 未结束则飞书&#x2F;Slack 通知。</li>
+</ul>
+<h3 id="15-配置中心"><a href="#15-配置中心" class="headerlink" title="15. 配置中心"></a>15. 配置中心</h3><ul>
+<li>YAML 文件 + pydantic 校验，热更新：watchdog 监听 inode 变化，5 s 内 reload；无需重启浏览器。</li>
+</ul>
+<h3 id="16-一键部署脚本"><a href="#16-一键部署脚本" class="headerlink" title="16. 一键部署脚本"></a>16. 一键部署脚本</h3><ul>
+<li>Dockerfile：基于官方 chromium-image，多阶段编译把模型权重、代码、依赖打进去</li>
+<li>docker-compose：<br>– web-agent 服务（含浏览器+模型）<br>– redis 服务<br>– postgres 服务<br>– prometheus + grafana 服务</li>
+<li>单台 16 核 32 GB + RTX-4080(16G) 可并发 4 浏览器 4 模型实例，日跑 2000 个站点报表。</li>
+</ul>
+<h2 id="3-份离线自建资产"><a href="#3-份离线自建资产" class="headerlink" title="3 份离线自建资产"></a>3 份离线自建资产</h2><h3 id="预训练语料（100-万页）"><a href="#预训练语料（100-万页）" class="headerlink" title="预训练语料（100 万页）"></a>预训练语料（100 万页）</h3><ul>
+<li>来源：CommonCrawl 中文网页 40 万 + 主流电商后台模板 60 万（用 GPT-4o 自动生成「随机目标+操作轨迹」）</li>
+<li>格式：{ “jpg_path”: “xxx”, “dom_json”: “…”, “goal”: “下载 2025-12 销售报表”, “action_sequence”: […] }</li>
+</ul>
+<h3 id="清洗规则知识库（5-万条）"><a href="#清洗规则知识库（5-万条）" class="headerlink" title="清洗规则知识库（5 万条）"></a>清洗规则知识库（5 万条）</h3><ul>
+<li>列名映射：「订单金额→amount」「實收金額→amount」…</li>
+<li>正则集合：日期、币种、千分位、括号负数等</li>
+<li>用于微调「代码小模型」+ 校验输出。</li>
+</ul>
+<h3 id="词表-符号表"><a href="#词表-符号表" class="headerlink" title="词表&#x2F;符号表"></a>词表&#x2F;符号表</h3><ul>
+<li>动作空间 7 类、CSS 属性白名单、异常编码表（验证码&#x2F;滑块&#x2F;登录失败&#x2F;无数据）</li>
+<li>保证模型输出可解析、日志可追踪。</li>
+</ul>
+<h2 id="四、开发顺序（6-周排期）"><a href="#四、开发顺序（6-周排期）" class="headerlink" title="四、开发顺序（6 周排期）"></a>四、开发顺序（6 周排期）</h2><ul>
+<li>Week1 浏览器裸 CDP 封装 + 截图&#x2F;DOM 序列化</li>
+<li>Week2 视觉编码器训练 + 向量 ANN 索引</li>
+<li>Week3 语言模型微调（1.1B→7B）+ 推理服务</li>
+<li>Week4 调度+并发+Redis 队列打通，单站点闭环</li>
+<li>Week5 异常恢复+验证码+自回归测试，成功率&gt;90%</li>
+<li>Week6 数据清洗+Parquet 落盘+监控告警+Docker 化</li>
+</ul>
+<h2 id="五、最小可运行-Git-目录结构"><a href="#五、最小可运行-Git-目录结构" class="headerlink" title="五、最小可运行 Git 目录结构"></a>五、最小可运行 Git 目录结构</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ai-sales-agent/</span><br><span class="line">├─ agent/               # 浏览器驱动、动作执行</span><br><span class="line">├─ model/               # 微调脚本、权重、推理入口</span><br><span class="line">├─ memory/              # ANN 索引、经验池 SQL</span><br><span class="line">├─ etl/                 # 清洗沙箱、规则库</span><br><span class="line">├─ scheduler/           # 任务队列、生命周期</span><br><span class="line">├─ monitor/             # 日志、metrics、告警</span><br><span class="line">├─ deploy/              # Dockerfile, docker-compose.yml</span><br><span class="line">└─ tools/               # 数据合成、评测脚本</span><br></pre></td></tr></table></figure>
+<p>全部自研意味着：<br>“浏览器自己驱、模型自己训、向量自己建、清洗自己写、调度自己管、监控自己搭”。<br>按上面 16 模块 + 3 资产 + 6 周排期推进，你就能得到一条不依赖任何商用&#x2F;开源黑盒框架、可 100% 源码级掌控的 AI 数据抓取生产线。祝开发顺利，随时卡位可再问我！</p>
+<h1 id="有开源的用开源的"><a href="#有开源的用开源的" class="headerlink" title="有开源的用开源的"></a>有开源的用开源的</h1><p>下面给你一份“能直接跑、全开源、0→1” 的技术栈速查表——把市面上最活跃、中文支持好、且完全可本地部署的开源项目，对应到前述 5 大子系统。拿着这张表，你就可以「npm install &#x2F; pip install &#x2F; docker pull」之后立刻开干，不必自己从头写。</p>
+<h3 id="一、浏览器驱动（裸-CDP-不依赖商业包）"><a href="#一、浏览器驱动（裸-CDP-不依赖商业包）" class="headerlink" title="一、浏览器驱动（裸 CDP 不依赖商业包）"></a>一、浏览器驱动（裸 CDP 不依赖商业包）</h3><ul>
+<li>chrome-remote-interface<br>语言：Node.js<br>作用：直接对 Chrome 9222 端口发 CDP 命令，等价于自写「Page.navigate &#x2F; DOM.querySelector &#x2F; Input.dispatchMouseEvent」<br>地址：<a target="_blank" rel="noopener" href="https://github.com/cyrus-and/chrome-remote-interface">https://github.com/cyrus-and/chrome-remote-interface</a><br>备注：配合 Puppeteer-core 亦可，但想“零黑盒”就裸用 CRI。<br>P* yChromeDevTools（Python）<br>同上，只是 Python 封装，适合后端统一用 Python 的团队。</li>
+</ul>
+<h3 id="二、视觉-语言模型（开源-中文友好）"><a href="#二、视觉-语言模型（开源-中文友好）" class="headerlink" title="二、视觉-语言模型（开源 &amp; 中文友好）"></a>二、视觉-语言模型（开源 &amp; 中文友好）</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>规模</th>
+<th>特点</th>
+<th>下载地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Qwen2.5-VL-7B</td>
+<td>7B</td>
+<td>中英双语、448×448 高分辨率、OCR 强、MIT 协议</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/QwenLM/Qwen-VL">https://github.com/QwenLM/Qwen-VL</a></td>
+</tr>
+<tr>
+<td>CogVLM-17B</td>
+<td>17B</td>
+<td>10B 视觉 + 7B 语言，幻觉低，支持中文</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/THUDM/CogVLM">https://github.com/THUDM/CogVLM</a></td>
+</tr>
+<tr>
+<td>InternVL2.5-8B</td>
+<td>8B</td>
+<td>MMMU&gt;60，文档 &#x2F; 图表 &#x2F; 网页理解 SOTA</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/OpenGVLab/InternVL">https://github.com/OpenGVLab/InternVL</a></td>
+</tr>
+<tr>
+<td>Kimi-VL-A3B-Thinking-2506</td>
+<td>3B</td>
+<td>小参数、推理快，MathVista 80.1 分</td>
+<td>开源权重已放 HuggingFace</td>
+</tr>
+</tbody></table>
+<p>推理框架</p>
+<ul>
+<li>vLLM + Transformers 即可一键启动；显存不够就用 bitsandbytes 8-bit &#x2F; 4-bit 量化。</li>
+<li>batch 推理首 token &lt;600 ms，单卡 24 GB 可跑 7B 模型 int4。</li>
+</ul>
+<h3 id="三、向量记忆（RAG-召回轨迹）"><a href="#三、向量记忆（RAG-召回轨迹）" class="headerlink" title="三、向量记忆（RAG 召回轨迹）"></a>三、向量记忆（RAG 召回轨迹）</h3><ul>
+<li>Chroma<br>语言：Python &#x2F; JS，MIT 协议<br>特点：pip install chromadb 即可，本地文件持久化，4 行代码就能 add &#x2F; query<br>地址：<a target="_blank" rel="noopener" href="https://github.com/chroma-core/chroma">https://github.com/chroma-core/chroma</a></li>
+<li>Qdrant（Rust 内核，Python SDK）<br>如果数据上到千万级，需要过滤 + 分布式，可选 Qdrant；单机用 Docker 一个容器搞定。</li>
+</ul>
+<h3 id="四、动作生成-Agent-框架"><a href="#四、动作生成-Agent-框架" class="headerlink" title="四、动作生成 &amp; Agent 框架"></a>四、动作生成 &amp; Agent 框架</h3><ol>
+<li>LangChain-Community + ReAct 模板</li>
+</ol>
+<ul>
+<li>已集成「CDPToolkit」和「OpenAI-like」接口，把 Qwen-VL 当 LLM 节点，自定义 Tool 为「click&#x2F;type&#x2F;scroll」即可。</li>
+</ul>
+<ol start="2">
+<li>seeact（WebAgent 开源实现）</li>
+</ol>
+<ul>
+<li>基于裸 CDP + 多模态模型，直接输出「selector + action」JSON；源码仅 800 行，改改就能接入自己的 Qwen-VL。</li>
+<li>地址：<a target="_blank" rel="noopener" href="https://github.com/nvda/seeact">https://github.com/nvda/seeact</a></li>
+</ul>
+<h3 id="五、数据清洗-落盘"><a href="#五、数据清洗-落盘" class="headerlink" title="五、数据清洗 &amp; 落盘"></a>五、数据清洗 &amp; 落盘</h3><ol>
+<li>DuckDB &#x2F; Pandas</li>
+</ol>
+<ul>
+<li>轻量 ETL：SQL + Python UDF，单文件 1000 万行无压力。</li>
+</ul>
+<ol start="2">
+<li>datasette + Git LFS</li>
+</ol>
+<ul>
+<li>把结果写 SQLite，datasette 一键发布成只读 Web UI；大文件走 Git LFS，版本可回滚。</li>
+</ul>
+<h3 id="六、调度-监控（全开源）"><a href="#六、调度-监控（全开源）" class="headerlink" title="六、调度 &amp; 监控（全开源）"></a>六、调度 &amp; 监控（全开源）</h3><ul>
+<li>任务队列：Celery + Redis</li>
+<li>定时：APScheduler（单机）或 Airflow（集群）</li>
+<li>监控：Prometheus + Grafana + AlertManager</li>
+<li>日志：Vector → Elasticsearch → Kibana（可选）</li>
+</ul>
+<h2 id="总结（直接照抄即可）"><a href="#总结（直接照抄即可）" class="headerlink" title="总结（直接照抄即可）"></a>总结（直接照抄即可）</h2><ul>
+<li>浏览器：chrome-remote-interface (JS) 或 PyChromeDevTools (Python)</li>
+<li>视觉模型：Qwen2.5-VL-7B &#x2F; CogVLM &#x2F; InternVL2.5 均可本地推理</li>
+<li>向量记忆：Chroma</li>
+<li>Agent 框架：seeact（裸 CDP + ReAct）</li>
+<li>数据清洗：Pandas + DuckDB</li>
+<li>调度&#x2F;监控：Celery + Prometheus + Grafana</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/01/26/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%A6%E5%8D%95/" rel="prev" title="机器学习书单">
+                  <i class="fa fa-angle-left"></i> 机器学习书单
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">John Doe</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
