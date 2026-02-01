@@ -28,7 +28,7 @@
 <meta property="og:description" content="如果你想“自己用 AI”来实现整套「自动打开网站 → 登录各销售后台 → 下载业务数据」，本质上就是把传统爬虫&#x2F;RPA 流程里的“人工写规则”环节，尽量换成大模型来“看网页→决策→写代码&#x2F;点按钮”。为此，你需要在系统里内嵌 6 个 AI 能力模块，对应 6 个功能点：  1. 视觉解析（Vision Parsing）功能：把网页截图 + DOM 结构喂给多模态模型，让它“看懂">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-01-27T15:24:55.000Z">
-<meta property="article:modified_time" content="2026-01-27T15:51:56.252Z">
+<meta property="article:modified_time" content="2026-01-27T16:02:04.193Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 
@@ -121,7 +121,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%A7%86%E8%A7%89%E8%A7%A3%E6%9E%90%EF%BC%88Vision-Parsing%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">1. 视觉解析（Vision Parsing）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AF%BC%E8%88%AA%E8%A7%84%E5%88%92%EF%BC%88Navigation-Planning%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">2. 导航规划（Navigation Planning）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%8A%A8%E4%BD%9C%E6%89%A7%E8%A1%8C%EF%BC%88Action-Execution%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">3. 动作执行（Action Execution）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%BC%82%E5%B8%B8%E6%81%A2%E5%A4%8D%EF%BC%88Self-healing%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">4. 异常恢复（Self-healing）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97-%E5%AF%B9%E9%BD%90%EF%BC%88Data-Post-processing%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">5. 数据清洗&#x2F;对齐（Data Post-processing）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E8%AE%B0%E5%BF%86%E4%B8%8E%E5%8F%8D%E9%A6%88%EF%BC%88Memory-Feedback%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">6. 记忆与反馈（Memory &amp; Feedback）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%89%88%E6%9C%AC"><span class="nav-number">7.</span> <span class="nav-text">一句话版本</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A8%E8%87%AA%E7%A0%94%E7%9A%84%E8%AF%9D"><span class="nav-number"></span> <span class="nav-text">全自研的话</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#16-%E4%B8%AA%E5%BF%85%E9%A1%BB%E8%87%AA%E7%A0%94%E7%9A%84%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97"><span class="nav-number"></span> <span class="nav-text">16 个必须自研的功能模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B5%8F%E8%A7%88%E5%99%A8%E9%A9%B1%E5%8A%A8%EF%BC%88%E8%A3%B8-CDP%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">1.浏览器驱动（裸 CDP）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%A1%B5%E9%9D%A2%E5%BF%AB%E7%85%A7%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">2.页面快照序列化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%A7%86%E8%A7%89%E7%BC%96%E7%A0%81%E5%99%A8%EF%BC%88Vision-Encoder%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">3.视觉编码器（Vision Encoder）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8A%A8%E4%BD%9C%E8%AF%8D%E6%B1%87%E8%A1%A8-%E5%8A%A8%E4%BD%9C%E7%A9%BA%E9%97%B4"><span class="nav-number">4.</span> <span class="nav-text">4.动作词汇表 &amp; 动作空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%B0%8F%E5%8F%82%E6%95%B0%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%881-1B%E2%80%937B%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">5. 小参数语言模型（1.1B–7B）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%EF%BC%88self-hosted%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">6. 推理服务（self-hosted）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%90%91%E9%87%8F%E7%B4%A2%E5%BC%95%EF%BC%88%E8%87%AA%E5%BB%BA-ANN%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">7. 向量索引（自建 ANN）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E8%BD%A8%E8%BF%B9%E5%9B%9E%E6%94%BE%E6%B1%A0%EF%BC%88Trajectory-Pool%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">8. 轨迹回放池（Trajectory Pool）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E7%BB%8F%E9%AA%8C%E5%8F%AC%E5%9B%9E%EF%BC%88RAG%EF%BC%89"><span class="nav-number">9.</span> <span class="nav-text">9. 经验召回（RAG）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E4%B8%8E%E8%87%AA%E6%81%A2%E5%A4%8D"><span class="nav-number">10.</span> <span class="nav-text">10. 异常检测与自恢复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97%E8%84%9A%E6%9C%AC%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">11.</span> <span class="nav-text">11. 数据清洗脚本生成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-%E7%89%88%E6%9C%AC%E5%8C%96%E8%90%BD%E7%9B%98%EF%BC%88Git-LFS-Parquet%EF%BC%89"><span class="nav-number">12.</span> <span class="nav-text">12. 版本化落盘（Git LFS + Parquet）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-%E8%B0%83%E5%BA%A6%E4%B8%8E%E5%B9%B6%E5%8F%91%E5%BC%95%E6%93%8E"><span class="nav-number">13.</span> <span class="nav-text">13. 调度与并发引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-%E7%9B%91%E6%8E%A7-%E5%8F%AF%E8%A7%82%E6%B5%8B"><span class="nav-number">14.</span> <span class="nav-text">14. 监控 &amp; 可观测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83"><span class="nav-number">15.</span> <span class="nav-text">15. 配置中心</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC"><span class="nav-number">16.</span> <span class="nav-text">16. 一键部署脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BB%BD%E7%A6%BB%E7%BA%BF%E8%87%AA%E5%BB%BA%E8%B5%84%E4%BA%A7"><span class="nav-number"></span> <span class="nav-text">3 份离线自建资产</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E8%AE%AD%E7%BB%83%E8%AF%AD%E6%96%99%EF%BC%88100-%E4%B8%87%E9%A1%B5%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">预训练语料（100 万页）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E6%B4%97%E8%A7%84%E5%88%99%E7%9F%A5%E8%AF%86%E5%BA%93%EF%BC%885-%E4%B8%87%E6%9D%A1%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">清洗规则知识库（5 万条）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%8D%E8%A1%A8-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">词表&#x2F;符号表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%BC%80%E5%8F%91%E9%A1%BA%E5%BA%8F%EF%BC%886-%E5%91%A8%E6%8E%92%E6%9C%9F%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">四、开发顺序（6 周排期）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%9C%80%E5%B0%8F%E5%8F%AF%E8%BF%90%E8%A1%8C-Git-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number"></span> <span class="nav-text">五、最小可运行 Git 目录结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E5%BC%80%E6%BA%90%E7%9A%84%E7%94%A8%E5%BC%80%E6%BA%90%E7%9A%84"><span class="nav-number"></span> <span class="nav-text">有开源的用开源的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E9%A9%B1%E5%8A%A8%EF%BC%88%E8%A3%B8-CDP-%E4%B8%8D%E4%BE%9D%E8%B5%96%E5%95%86%E4%B8%9A%E5%8C%85%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">一、浏览器驱动（裸 CDP 不依赖商业包）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%A7%86%E8%A7%89-%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%88%E5%BC%80%E6%BA%90-%E4%B8%AD%E6%96%87%E5%8F%8B%E5%A5%BD%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">二、视觉-语言模型（开源 &amp; 中文友好）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%90%91%E9%87%8F%E8%AE%B0%E5%BF%86%EF%BC%88RAG-%E5%8F%AC%E5%9B%9E%E8%BD%A8%E8%BF%B9%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">三、向量记忆（RAG 召回轨迹）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%8A%A8%E4%BD%9C%E7%94%9F%E6%88%90-Agent-%E6%A1%86%E6%9E%B6"><span class="nav-number">4.</span> <span class="nav-text">四、动作生成 &amp; Agent 框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97-%E8%90%BD%E7%9B%98"><span class="nav-number">5.</span> <span class="nav-text">五、数据清洗 &amp; 落盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%B0%83%E5%BA%A6-%E7%9B%91%E6%8E%A7%EF%BC%88%E5%85%A8%E5%BC%80%E6%BA%90%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">六、调度 &amp; 监控（全开源）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%EF%BC%88%E7%9B%B4%E6%8E%A5%E7%85%A7%E6%8A%84%E5%8D%B3%E5%8F%AF%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">总结（直接照抄即可）</span></a></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%A7%86%E8%A7%89%E8%A7%A3%E6%9E%90%EF%BC%88Vision-Parsing%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">1. 视觉解析（Vision Parsing）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AF%BC%E8%88%AA%E8%A7%84%E5%88%92%EF%BC%88Navigation-Planning%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">2. 导航规划（Navigation Planning）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%8A%A8%E4%BD%9C%E6%89%A7%E8%A1%8C%EF%BC%88Action-Execution%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">3. 动作执行（Action Execution）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%BC%82%E5%B8%B8%E6%81%A2%E5%A4%8D%EF%BC%88Self-healing%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">4. 异常恢复（Self-healing）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97-%E5%AF%B9%E9%BD%90%EF%BC%88Data-Post-processing%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">5. 数据清洗&#x2F;对齐（Data Post-processing）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E8%AE%B0%E5%BF%86%E4%B8%8E%E5%8F%8D%E9%A6%88%EF%BC%88Memory-Feedback%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">6. 记忆与反馈（Memory &amp; Feedback）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%89%88%E6%9C%AC"><span class="nav-number">7.</span> <span class="nav-text">一句话版本</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A8%E8%87%AA%E7%A0%94%E7%9A%84%E8%AF%9D"><span class="nav-number"></span> <span class="nav-text">全自研的话</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#16-%E4%B8%AA%E5%BF%85%E9%A1%BB%E8%87%AA%E7%A0%94%E7%9A%84%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97"><span class="nav-number"></span> <span class="nav-text">16 个必须自研的功能模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B5%8F%E8%A7%88%E5%99%A8%E9%A9%B1%E5%8A%A8%EF%BC%88%E8%A3%B8-CDP%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">1.浏览器驱动（裸 CDP）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%A1%B5%E9%9D%A2%E5%BF%AB%E7%85%A7%E5%BA%8F%E5%88%97%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">2.页面快照序列化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%A7%86%E8%A7%89%E7%BC%96%E7%A0%81%E5%99%A8%EF%BC%88Vision-Encoder%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">3.视觉编码器（Vision Encoder）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8A%A8%E4%BD%9C%E8%AF%8D%E6%B1%87%E8%A1%A8-%E5%8A%A8%E4%BD%9C%E7%A9%BA%E9%97%B4"><span class="nav-number">4.</span> <span class="nav-text">4.动作词汇表 &amp; 动作空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%B0%8F%E5%8F%82%E6%95%B0%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%881-1B%E2%80%937B%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">5. 小参数语言模型（1.1B–7B）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%8E%A8%E7%90%86%E6%9C%8D%E5%8A%A1%EF%BC%88self-hosted%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">6. 推理服务（self-hosted）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%90%91%E9%87%8F%E7%B4%A2%E5%BC%95%EF%BC%88%E8%87%AA%E5%BB%BA-ANN%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">7. 向量索引（自建 ANN）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E8%BD%A8%E8%BF%B9%E5%9B%9E%E6%94%BE%E6%B1%A0%EF%BC%88Trajectory-Pool%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">8. 轨迹回放池（Trajectory Pool）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E7%BB%8F%E9%AA%8C%E5%8F%AC%E5%9B%9E%EF%BC%88RAG%EF%BC%89"><span class="nav-number">9.</span> <span class="nav-text">9. 经验召回（RAG）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-%E5%BC%82%E5%B8%B8%E6%A3%80%E6%B5%8B%E4%B8%8E%E8%87%AA%E6%81%A2%E5%A4%8D"><span class="nav-number">10.</span> <span class="nav-text">10. 异常检测与自恢复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97%E8%84%9A%E6%9C%AC%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">11.</span> <span class="nav-text">11. 数据清洗脚本生成器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-%E7%89%88%E6%9C%AC%E5%8C%96%E8%90%BD%E7%9B%98%EF%BC%88Git-LFS-Parquet%EF%BC%89"><span class="nav-number">12.</span> <span class="nav-text">12. 版本化落盘（Git LFS + Parquet）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-%E8%B0%83%E5%BA%A6%E4%B8%8E%E5%B9%B6%E5%8F%91%E5%BC%95%E6%93%8E"><span class="nav-number">13.</span> <span class="nav-text">13. 调度与并发引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-%E7%9B%91%E6%8E%A7-%E5%8F%AF%E8%A7%82%E6%B5%8B"><span class="nav-number">14.</span> <span class="nav-text">14. 监控 &amp; 可观测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83"><span class="nav-number">15.</span> <span class="nav-text">15. 配置中心</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC"><span class="nav-number">16.</span> <span class="nav-text">16. 一键部署脚本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BB%BD%E7%A6%BB%E7%BA%BF%E8%87%AA%E5%BB%BA%E8%B5%84%E4%BA%A7"><span class="nav-number"></span> <span class="nav-text">3 份离线自建资产</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E8%AE%AD%E7%BB%83%E8%AF%AD%E6%96%99%EF%BC%88100-%E4%B8%87%E9%A1%B5%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">预训练语料（100 万页）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E6%B4%97%E8%A7%84%E5%88%99%E7%9F%A5%E8%AF%86%E5%BA%93%EF%BC%885-%E4%B8%87%E6%9D%A1%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">清洗规则知识库（5 万条）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%8D%E8%A1%A8-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">词表&#x2F;符号表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%BC%80%E5%8F%91%E9%A1%BA%E5%BA%8F%EF%BC%886-%E5%91%A8%E6%8E%92%E6%9C%9F%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">四、开发顺序（6 周排期）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%9C%80%E5%B0%8F%E5%8F%AF%E8%BF%90%E8%A1%8C-Git-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number"></span> <span class="nav-text">五、最小可运行 Git 目录结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E5%BC%80%E6%BA%90%E7%9A%84%E7%94%A8%E5%BC%80%E6%BA%90%E7%9A%84"><span class="nav-number"></span> <span class="nav-text">有开源的用开源的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E9%A9%B1%E5%8A%A8%EF%BC%88%E8%A3%B8-CDP-%E4%B8%8D%E4%BE%9D%E8%B5%96%E5%95%86%E4%B8%9A%E5%8C%85%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">一、浏览器驱动（裸 CDP 不依赖商业包）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%A7%86%E8%A7%89-%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%88%E5%BC%80%E6%BA%90-%E4%B8%AD%E6%96%87%E5%8F%8B%E5%A5%BD%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">二、视觉-语言模型（开源 &amp; 中文友好）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%90%91%E9%87%8F%E8%AE%B0%E5%BF%86%EF%BC%88RAG-%E5%8F%AC%E5%9B%9E%E8%BD%A8%E8%BF%B9%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">三、向量记忆（RAG 召回轨迹）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%8A%A8%E4%BD%9C%E7%94%9F%E6%88%90-Agent-%E6%A1%86%E6%9E%B6"><span class="nav-number">4.</span> <span class="nav-text">四、动作生成 &amp; Agent 框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97-%E8%90%BD%E7%9B%98"><span class="nav-number">5.</span> <span class="nav-text">五、数据清洗 &amp; 落盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%B0%83%E5%BA%A6-%E7%9B%91%E6%8E%A7%EF%BC%88%E5%85%A8%E5%BC%80%E6%BA%90%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">六、调度 &amp; 监控（全开源）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%EF%BC%88%E7%9B%B4%E6%8E%A5%E7%85%A7%E6%8A%84%E5%8D%B3%E5%8F%AF%EF%BC%89"><span class="nav-number"></span> <span class="nav-text">总结（直接照抄即可）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%86%E8%8A%82%E6%A2%B3%E7%90%86"><span class="nav-number"></span> <span class="nav-text">细节梳理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CLIP-ViT-B-16-%E5%92%8C-%E8%87%AA%E8%AE%AD-ScreenBERT-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">CLIP-ViT-B&#x2F;16 和 自训 ScreenBERT 的区别</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -134,7 +134,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -194,9 +194,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2026-01-27 23:24:55 / Modified: 23:51:56" itemprop="dateCreated datePublished" datetime="2026-01-27T23:24:55+08:00">2026-01-27</time>
+      <time title="Created: 2026-01-27 23:24:55" itemprop="dateCreated datePublished" datetime="2026-01-27T23:24:55+08:00">2026-01-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-01-28 00:02:04" itemprop="dateModified" datetime="2026-01-28T00:02:04+08:00">2026-01-28</time>
     </span>
 
   
@@ -462,6 +468,66 @@
 <li>数据清洗：Pandas + DuckDB</li>
 <li>调度&#x2F;监控：Celery + Prometheus + Grafana</li>
 </ul>
+<h1 id="细节梳理"><a href="#细节梳理" class="headerlink" title="细节梳理"></a>细节梳理</h1><h3 id="CLIP-ViT-B-16-和-自训-ScreenBERT-的区别"><a href="#CLIP-ViT-B-16-和-自训-ScreenBERT-的区别" class="headerlink" title="CLIP-ViT-B&#x2F;16 和 自训 ScreenBERT 的区别"></a>CLIP-ViT-B&#x2F;16 和 自训 ScreenBERT 的区别</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>CLIP-ViT-B&#x2F;16</th>
+<th>自训 ScreenBERT（以网页截图-DOM 为输入的 BERT 变体）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1. 训练目标</td>
+<td>图文对齐：4 亿图文对对比学习，让图片向量与对应文本向量余弦相似度最大</td>
+<td>网页元素-动作预测：给定截图+DOM，预测下一步操作（或元素语义），本质是“网页理解”预训练</td>
+</tr>
+<tr>
+<td>2. 输入形式</td>
+<td>纯图片（224×224）→ 16×16 Patch → 196 个视觉 Token</td>
+<td>双模态：① 截图切块 ② 同级 DOM 结构（节点标签、属性、坐标）→ 同时送进 Transformer</td>
+</tr>
+<tr>
+<td>3. 数据规模&#x2F;领域</td>
+<td>通用自然图像（WebImageText 4 亿对）</td>
+<td>自建 100 万级网页截图-操作轨迹，领域专注“后台&#x2F;表单&#x2F;按钮”</td>
+</tr>
+<tr>
+<td>4. 输出向量特点</td>
+<td>全局单向量（[CLS]），图文空间对齐，零样本分类强</td>
+<td>保留细粒度 token 向量，可接 token-level 头做元素定位或动作分类</td>
+</tr>
+<tr>
+<td>5.  Patch&#x2F;Embedding 策略</td>
+<td>固定 16×16 像素 Patch；无显式文本嵌入</td>
+<td>常见做法：视觉仍用 16×16 Patch，DOM 按节点序列化后 WordPiece 分词，再与视觉 Patch 做 Cross-Attention 或拼接</td>
+</tr>
+<tr>
+<td>6. 参数规模</td>
+<td>视觉编码器 86 M（12 层 768 dim）</td>
+<td>可自定，常见 12 层 768 dim，与 BERT-base 相当；若加 Cross-Attn 会略大</td>
+</tr>
+<tr>
+<td>7. 适用下游任务</td>
+<td>图文检索、零样本分类、CLIP-Adapter 等</td>
+<td>网页元素定位、动作生成、RPA 流程理解、DOM 语义抽取</td>
+</tr>
+<tr>
+<td>8. 计算代价</td>
+<td>纯视觉，O(L²) 只取决于 Patch 数</td>
+<td>视觉+文本序列，序列更长（196+DOM_tokens），Attention 计算量更高</td>
+</tr>
+<tr>
+<td>9. 微调&#x2F;继续预训练难度</td>
+<td>公开权重丰富，直接加载即可</td>
+<td>需自采网页截图-操作对，清洗 DOM、对齐坐标，数据工程量大</td>
+</tr>
+<tr>
+<td>一句话总结</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>CLIP-ViT-B&#x2F;16 是“通用图文对齐”的纯视觉编码器；自训 ScreenBERT 是“网页专用、视觉+DOM 双模态”的细粒度理解模型，两者目标、输入、输出维度完全不同，在 RPA&#x2F;WebAgent 场景下 ScreenBERT 更精准，但需要自己从头造数据与训练 pipeline。</p>
 
     </div>
 
@@ -480,6 +546,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2026/01/28/%E8%87%AA%E8%AE%AD-ScreenBERT-demo/" rel="next" title="自训 ScreenBERT demo">
+                  自训 ScreenBERT demo <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>

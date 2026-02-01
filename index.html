@@ -129,7 +129,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -151,6 +151,218 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/01/29/autoDL-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%93%8D%E4%BD%9C%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/01/29/autoDL-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%93%8D%E4%BD%9C%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">autoDL 操作操作指南</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2026-01-29 05:16:19 / Modified: 05:28:20" itemprop="dateCreated datePublished" datetime="2026-01-29T05:16:19+08:00">2026-01-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>恭喜连接成功！🎉 现在按照下面的新手 checklist 操作，5 分钟后你就能开始跑代码了：</p>
+<h2 id="第一步：验证环境（必做"><a href="#第一步：验证环境（必做" class="headerlink" title="第一步：验证环境（必做)"></a>第一步：验证环境（必做)</h2><p>在 VS Code 的底部终端（如果没有，按 Ctrl+&#96; 打开）输入以下命令：</p>
+<h3 id="1-查看显卡（确认平台）"><a href="#1-查看显卡（确认平台）" class="headerlink" title="1. 查看显卡（确认平台）"></a>1. 查看显卡（确认平台）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+<p><strong>预期输出</strong>：显示 <code>RTX 3090</code> 或 <code>RTX 4090</code>，以及显存占用情况。</p>
+<ul>
+<li>如果报错 <code>command not found</code> → 重启实例或联系客服</li>
+</ul>
+<h3 id="2-验证-PyTorch-和-CUDA"><a href="#2-验证-PyTorch-和-CUDA" class="headerlink" title="2. 验证 PyTorch 和 CUDA"></a>2. 验证 PyTorch 和 CUDA</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">&quot;import torch; print(f&#x27;PyTorch: &#123;torch.__version__&#125;&#x27;); print(f&#x27;CUDA可用: &#123;torch.cuda.is_available()&#125;&#x27;); print(f&#x27;显卡: &#123;torch.cuda.get_device_name(0)&#125;&#x27;)&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong>预期输出：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PyTorch: 2.x.x</span><br><span class="line">CUDA可用: True</span><br><span class="line">显卡: NVIDIA GeForce RTX 3090</span><br></pre></td></tr></table></figure>
+<ul>
+<li>看到 True 说明 GPU 可用，可以开始炼丹了！</li>
+</ul>
+<h2 id="第二步：整理工作空间（养成好习惯）"><a href="#第二步：整理工作空间（养成好习惯）" class="headerlink" title="第二步：整理工作空间（养成好习惯）"></a>第二步：整理工作空间（养成好习惯）</h2><p>不要在根目录 &#x2F;root 乱放文件，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入数据盘（空间大，重启不会丢）</span></span><br><span class="line"><span class="built_in">cd</span> /root/autodl-tmp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建项目文件夹（用英文，别用中文）</span></span><br><span class="line"><span class="built_in">mkdir</span> cv-project</span><br><span class="line"><span class="built_in">cd</span> cv-project</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建子目录</span></span><br><span class="line"><span class="built_in">mkdir</span> data        <span class="comment"># 放图片数据集</span></span><br><span class="line"><span class="built_in">mkdir</span> models      <span class="comment"># 放训练好的模型</span></span><br><span class="line"><span class="built_in">mkdir</span> src         <span class="comment"># 放代码文件</span></span><br><span class="line"><span class="built_in">mkdir</span> notebooks   <span class="comment"># 放 Jupyter 笔记本（可选）</span></span><br></pre></td></tr></table></figure>
+<p><strong>在 VS Code 左侧文件栏刷新</strong>，你现在能看到这些文件夹了。</p>
+<h2 id="第三步：跑一个-Hello-World（验证全流程）"><a href="#第三步：跑一个-Hello-World（验证全流程）" class="headerlink" title="第三步：跑一个 Hello World（验证全流程）"></a>第三步：跑一个 Hello World（验证全流程）</h2><p>在 <code>src</code> 文件夹里新建文件 <code>test_gpu.py</code>，粘贴：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查 GPU</span></span><br><span class="line">device = torch.device(<span class="string">&quot;cuda&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;使用设备: <span class="subst">&#123;device&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 简单的矩阵乘法测试（验证 GPU 真的在工作）</span></span><br><span class="line">a = torch.randn(<span class="number">1000</span>, <span class="number">1000</span>).to(device)</span><br><span class="line">b = torch.randn(<span class="number">1000</span>, <span class="number">1000</span>).to(device)</span><br><span class="line"></span><br><span class="line">start = time.time()</span><br><span class="line">c = torch.matmul(a, b)</span><br><span class="line">torch.cuda.synchronize()  <span class="comment"># 等待 GPU 完成</span></span><br><span class="line">end = time.time()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;矩阵计算耗时: <span class="subst">&#123;(end-start)*<span class="number">1000</span>:<span class="number">.2</span>f&#125;</span> ms&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;✅ GPU 工作正常！&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>运行：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /root/autodl-tmp/cv-project/src</span><br><span class="line">python test_gpu.py</span><br></pre></td></tr></table></figure>
+<p>看到 ✅ GPU 工作正常！ 和毫秒级的时间 → 环境完全 OK。</p>
+<h2 id="第四步：安装你需要的包（图像识别常用）"><a href="#第四步：安装你需要的包（图像识别常用）" class="headerlink" title="第四步：安装你需要的包（图像识别常用）"></a>第四步：安装你需要的包（图像识别常用）</h2><p>根据你的具体任务，安装缺少的库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基础图像处理（必装）</span></span><br><span class="line">pip install opencv-python matplotlib pillow scikit-learn tqdm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果需要预处理大规模数据</span></span><br><span class="line">pip install pandas numpy</span><br><span class="line"></span><br><span class="line"><span class="comment"># 特定模型库（按需选择）</span></span><br><span class="line">pip install timm          <span class="comment"># PyTorch 图像模型库（ResNet, ViT 等）</span></span><br><span class="line">pip install ultralytics   <span class="comment"># 如果要用 YOLOv8 做目标检测</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：AutoDL 已经预装了 torch, torchvision, numpy，不需要重装。</p>
+<h2 id="第五步：开始你的图像识别项目"><a href="#第五步：开始你的图像识别项目" class="headerlink" title="第五步：开始你的图像识别项目"></a>第五步：开始你的图像识别项目</h2><h3 id="选项-A：跑教程-复现论文（小白推荐）"><a href="#选项-A：跑教程-复现论文（小白推荐）" class="headerlink" title="选项 A：跑教程&#x2F;复现论文（小白推荐）"></a>选项 A：跑教程&#x2F;复现论文（小白推荐）</h3><ul>
+<li>把 GitHub 上的代码仓库克隆下来：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /root/autodl-tmp</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/xxx/xxx.git</span><br></pre></td></tr></table></figure>
+<ul>
+<li>按照 README 准备数据，运行训练脚本</li>
+</ul>
+<h3 id="选项-B：自己从零开始写"><a href="#选项-B：自己从零开始写" class="headerlink" title="选项 B：自己从零开始写"></a>选项 B：自己从零开始写</h3><p>在 src 文件夹创建：</p>
+<ul>
+<li>train.py：训练脚本</li>
+<li>model.py：模型定义（ResNet、自定义 CNN 等）</li>
+<li>dataset.py：数据加载（继承 torch.utils.data.Dataset）</li>
+<li>config.yaml 或 config.py：超参数配置（学习率、batch size 等）</li>
+</ul>
+<h3 id="选项-C：用-Jupyter-Notebook-探索（适合调试）"><a href="#选项-C：用-Jupyter-Notebook-探索（适合调试）" class="headerlink" title="选项 C：用 Jupyter Notebook 探索（适合调试）"></a>选项 C：用 Jupyter Notebook 探索（适合调试）</h3><p>在终端输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter lab --ip=0.0.0.0 --port=6006 --allow-root</span><br></pre></td></tr></table></figure>
+<p>然后在 VS Code 新建 .ipynb 文件，或者通过浏览器访问（需要端口转发）。</p>
+<h2 id="第六步：养成好习惯（避免踩坑）"><a href="#第六步：养成好习惯（避免踩坑）" class="headerlink" title="第六步：养成好习惯（避免踩坑）"></a>第六步：养成好习惯（避免踩坑）</h2><h3 id="1-及时保存训练结果"><a href="#1-及时保存训练结果" class="headerlink" title="1. 及时保存训练结果"></a>1. 及时保存训练结果</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定期压缩重要数据下载到本地（或传网盘）</span></span><br><span class="line">tar -czvf backup-$(<span class="built_in">date</span> +%Y%m%d).tar.gz models/ data/</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-监控显存（避免爆显存）"><a href="#2-监控显存（避免爆显存）" class="headerlink" title="2. 监控显存（避免爆显存）"></a>2. 监控显存（避免爆显存）</h3><p>训练时另开一个终端窗口，盯着：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch -n 1 nvidia-smi</span><br></pre></td></tr></table></figure>
+<p>看到 <code>Memory-Usage</code> 接近 100% 时，减小 batch size。</p>
+<h3 id="3-设置-Git（代码不丢失）"><a href="#3-设置-Git（代码不丢失）" class="headerlink" title="3. 设置 Git（代码不丢失）"></a>3. 设置 Git（代码不丢失）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;你的名字&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;你的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+<p>把代码 push 到 GitHub，防止实例释放后代码丢失。</p>
+<h2 id="你现在应该看到的画面"><a href="#你现在应该看到的画面" class="headerlink" title="你现在应该看到的画面"></a>你现在应该看到的画面</h2><h3 id="左侧文件栏：cv-project-文件夹，里面有-data-models-src"><a href="#左侧文件栏：cv-project-文件夹，里面有-data-models-src" class="headerlink" title="左侧文件栏：cv-project 文件夹，里面有 data&#x2F;, models&#x2F;, src&#x2F;"></a>左侧文件栏：cv-project 文件夹，里面有 data&#x2F;, models&#x2F;, src&#x2F;</h3><h3 id="底部终端：显示-base-root-xxx-autodl-tmp-cv-project"><a href="#底部终端：显示-base-root-xxx-autodl-tmp-cv-project" class="headerlink" title="底部终端：显示 (base) root@xxx:~&#x2F;autodl-tmp&#x2F;cv-project#"></a>底部终端：显示 (base) root@xxx:~&#x2F;autodl-tmp&#x2F;cv-project#</h3><h3 id="Python-解释器：右下角显示-Python-3-8-x-‘base’-conda"><a href="#Python-解释器：右下角显示-Python-3-8-x-‘base’-conda" class="headerlink" title="Python 解释器：右下角显示 Python 3.8.x (‘base’: conda)"></a>Python 解释器：右下角显示 Python 3.8.x (‘base’: conda)</h3><h3 id="如果都对了，你现在就可以开始写-train-py-训练你的第一个图像识别模型了！"><a href="#如果都对了，你现在就可以开始写-train-py-训练你的第一个图像识别模型了！" class="headerlink" title="如果都对了，你现在就可以开始写 train.py 训练你的第一个图像识别模型了！"></a>如果都对了，你现在就可以开始写 train.py 训练你的第一个图像识别模型了！</h3>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/01/28/%E8%87%AA%E8%AE%AD-ScreenBERT-demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/01/28/%E8%87%AA%E8%AE%AD-ScreenBERT-demo/" class="post-title-link" itemprop="url">自训 ScreenBERT demo</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-01-28 00:16:14" itemprop="dateCreated datePublished" datetime="2026-01-28T00:16:14+08:00">2026-01-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-01-29 01:09:17" itemprop="dateModified" datetime="2026-01-29T01:09:17+08:00">2026-01-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>下面给出一份「可抄代码、可落地、可复现」的完整自训手册。<br>目标：3 周内把「ScreenBERT」从 0 训到线上 WebAgent，每一步都有脚本、命令行、关键超参、踩坑提示。你只需准备 1 张 24G 显卡 + 100 万网页截图（可自动生成）。</p>
+</blockquote>
+<h2 id="目录（一步一步跟做即可）"><a href="#目录（一步一步跟做即可）" class="headerlink" title="目录（一步一步跟做即可）"></a>目录（一步一步跟做即可）</h2><ol>
+<li>环境 &amp; 依赖</li>
+<li>数据工厂：自动生成 100 万「截图+DOM+动作」三元组</li>
+<li>模型代码：双塔→拼接→Transformer（已给完整文件）</li>
+<li>预训练：MLM + 动作分类双任务（脚本+slurm&#x2F;单机）</li>
+<li>微调：人工 1 万精品轨迹，让模型真正会点按钮</li>
+<li>评测：元素定位 Acc、整链成功率、消融实验</li>
+<li>推理部署：vLLM 4-bit 量化 + FastAPI 服务</li>
+<li>线上自学习：失败案例回流→向量记忆→每周增量训练</li>
+</ol>
+<h3 id="一、conda-新建隔离环境"><a href="#一、conda-新建隔离环境" class="headerlink" title="一、conda 新建隔离环境"></a>一、conda 新建隔离环境</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 新建环境（python 3.10 最稳）</span></span><br><span class="line">conda create -n screenbert python=3.10 -y</span><br><span class="line">conda activate screenbert</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 换国内源（可选，下载快）</span></span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、、conda-一键装-PyTorch（已含-CUDA）"><a href="#二、、conda-一键装-PyTorch（已含-CUDA）" class="headerlink" title="二、、conda 一键装 PyTorch（已含 CUDA）"></a>二、、conda 一键装 PyTorch（已含 CUDA）</h3><p>torch 需要 CUDA,1.2G有点大，走清华的镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 \</span><br><span class="line">-f https://mirrors.aliyun.com/pytorch-wheels/cu121</span><br></pre></td></tr></table></figure>
+<p>验证</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">&quot;import torch, torchvision; print(torch.__version__, torch.cuda.is_available())&quot;</span></span><br><span class="line"><span class="comment"># 应输出 2.5.x True</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -188,9 +400,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2026-01-27 23:24:55 / Modified: 23:51:56" itemprop="dateCreated datePublished" datetime="2026-01-27T23:24:55+08:00">2026-01-27</time>
+      <time title="Created: 2026-01-27 23:24:55" itemprop="dateCreated datePublished" datetime="2026-01-27T23:24:55+08:00">2026-01-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-01-28 00:02:04" itemprop="dateModified" datetime="2026-01-28T00:02:04+08:00">2026-01-28</time>
     </span>
 
   
@@ -457,6 +675,66 @@
 <li>数据清洗：Pandas + DuckDB</li>
 <li>调度&#x2F;监控：Celery + Prometheus + Grafana</li>
 </ul>
+<h1 id="细节梳理"><a href="#细节梳理" class="headerlink" title="细节梳理"></a>细节梳理</h1><h3 id="CLIP-ViT-B-16-和-自训-ScreenBERT-的区别"><a href="#CLIP-ViT-B-16-和-自训-ScreenBERT-的区别" class="headerlink" title="CLIP-ViT-B&#x2F;16 和 自训 ScreenBERT 的区别"></a>CLIP-ViT-B&#x2F;16 和 自训 ScreenBERT 的区别</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>CLIP-ViT-B&#x2F;16</th>
+<th>自训 ScreenBERT（以网页截图-DOM 为输入的 BERT 变体）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1. 训练目标</td>
+<td>图文对齐：4 亿图文对对比学习，让图片向量与对应文本向量余弦相似度最大</td>
+<td>网页元素-动作预测：给定截图+DOM，预测下一步操作（或元素语义），本质是“网页理解”预训练</td>
+</tr>
+<tr>
+<td>2. 输入形式</td>
+<td>纯图片（224×224）→ 16×16 Patch → 196 个视觉 Token</td>
+<td>双模态：① 截图切块 ② 同级 DOM 结构（节点标签、属性、坐标）→ 同时送进 Transformer</td>
+</tr>
+<tr>
+<td>3. 数据规模&#x2F;领域</td>
+<td>通用自然图像（WebImageText 4 亿对）</td>
+<td>自建 100 万级网页截图-操作轨迹，领域专注“后台&#x2F;表单&#x2F;按钮”</td>
+</tr>
+<tr>
+<td>4. 输出向量特点</td>
+<td>全局单向量（[CLS]），图文空间对齐，零样本分类强</td>
+<td>保留细粒度 token 向量，可接 token-level 头做元素定位或动作分类</td>
+</tr>
+<tr>
+<td>5.  Patch&#x2F;Embedding 策略</td>
+<td>固定 16×16 像素 Patch；无显式文本嵌入</td>
+<td>常见做法：视觉仍用 16×16 Patch，DOM 按节点序列化后 WordPiece 分词，再与视觉 Patch 做 Cross-Attention 或拼接</td>
+</tr>
+<tr>
+<td>6. 参数规模</td>
+<td>视觉编码器 86 M（12 层 768 dim）</td>
+<td>可自定，常见 12 层 768 dim，与 BERT-base 相当；若加 Cross-Attn 会略大</td>
+</tr>
+<tr>
+<td>7. 适用下游任务</td>
+<td>图文检索、零样本分类、CLIP-Adapter 等</td>
+<td>网页元素定位、动作生成、RPA 流程理解、DOM 语义抽取</td>
+</tr>
+<tr>
+<td>8. 计算代价</td>
+<td>纯视觉，O(L²) 只取决于 Patch 数</td>
+<td>视觉+文本序列，序列更长（196+DOM_tokens），Attention 计算量更高</td>
+</tr>
+<tr>
+<td>9. 微调&#x2F;继续预训练难度</td>
+<td>公开权重丰富，直接加载即可</td>
+<td>需自采网页截图-操作对，清洗 DOM、对齐坐标，数据工程量大</td>
+</tr>
+<tr>
+<td>一句话总结</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>CLIP-ViT-B&#x2F;16 是“通用图文对齐”的纯视觉编码器；自训 ScreenBERT 是“网页专用、视觉+DOM 双模态”的细粒度理解模型，两者目标、输入、输出维度完全不同，在 RPA&#x2F;WebAgent 场景下 ScreenBERT 更精准，但需要自己从头造数据与训练 pipeline。</p>
 
       
     </div>
